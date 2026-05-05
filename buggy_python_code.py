@@ -1,12 +1,10 @@
-import sys 
-import os
 import yaml
 import flask
+import urllib
+APP = flask.Flask(__name__)
 
-app = flask.Flask(__name__)
 
-
-@app.route("/")
+@APP.route("/")
 def index():
     version = flask.request.args.get("urllib_version")
     url = flask.request.args.get("url")
@@ -24,13 +22,14 @@ def print_nametag(format_string, person):
 
 
 def fetch_website(urllib_version, url):
+    """ Fetches website"""
     # Import the requested version (2 or 3) of urllib
     exec(f"import urllib{urllib_version} as urllib", globals())
     # Fetch and print the requested URL
  
     try: 
         http = urllib.PoolManager()
-        r = http.request('GET', url)
+        _ = http.request('GET', url)
     except:
         print('Exception')
 
@@ -64,4 +63,3 @@ if __name__ == '__main__':
     elif choice == "4":
         password = input("Enter master password: ")
         authenticate(password)
-
